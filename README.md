@@ -89,3 +89,23 @@ TEMPLATES = [
     </body>
 </html>
 ```
+
+## Render rich text
+The only approach I could think of for now is to create a render_html global_function (we are using django_jinja).
+
+In ```myapp.templatetags.jinja_tags.py```:
+
+```python
+from jinja2 import Markup
+from django_jinja import library
+
+@library.global_function
+def render_html(html):
+    return jinja2.Markup(html)
+```
+
+In your template:
+
+```html
+    <p>{{ render_html(page.body) }}</p>
+```
