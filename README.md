@@ -2,7 +2,7 @@
 Jinja2 extensions to support the main django tags on wagtail.
 This won't make wagtail use jinja as a template backend (cms admin) but allow you to use jinja in your CMS pages.
 
-## How to use the extensions
+## Setup the extensions
 Example of settings.py:
 
 ```python
@@ -70,4 +70,22 @@ TEMPLATES = [
         },
     },
 ]
+```
+
+## Use the tags in your templates
+```html
+<html>
+    <head></head>
+    <body>
+    {% wagtailuserbar %}
+    
+    <h1>An image</h1>
+    {% image page.image "width-720" %} <!-- Note that the filter_spec has to be between quotes -->
+    
+    <h1>A div with a background image</h1>
+    {% image page.image "width-1440" as background_image %}
+    <div style="background-image: url({{ background_image.url }});"></div>
+    
+    </body>
+</html>
 ```
