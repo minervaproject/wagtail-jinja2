@@ -2,6 +2,12 @@
 Jinja2 extensions to support the main django tags on wagtail.
 This won't make wagtail use jinja as a template backend (cms admin) but allow you to use jinja in your CMS pages.
 
+
+## Install
+```shell
+pip install wagtail-jinja2
+```
+
 ## Setup the extensions
 Example of settings.py:
 
