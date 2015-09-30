@@ -109,3 +109,30 @@ In your template:
 ```html
     <p>{{ render_html(page.body) }}</p>
 ```
+
+## Render blocks of a StreamField with original context
+In ```myapp.templatetags.jinja_tags.py```:
+
+```python
+@library.global_function
+@jinja2.contextfunction
+def render_stream_child(context, stream_child):
+    # Use the django_jinja to get the template content based on its name
+    template = get_template(stream_child.block.meta.template)
+    # Create a new context based on the current one as we can't edit it directly
+    new_context = context.get_all()
+    # Add the value on the context (value is the keyword chosen by wagtail for the blocks context)
+    new_context['value'] = stream_child.value
+    # Render the template with the context
+    html = template.render(context=new_context)
+    # Return the rendered template as safe html
+    return jinja2.Markup(html)
+```
+
+In your template:
+
+```html
+{% for stream_child in page.body %} {# body is a StreamField #}
+    {{ render_stream_child(stream_child) }}
+{% endfor %}
+```
